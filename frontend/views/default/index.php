@@ -39,4 +39,6 @@ $this->title = Yii::$app->name;
 
 <?php if (isset($sites) and !empty($sites)): ?>
     <?= $this->render('_map', ['sites' => $sites]) ?>
+<?php else: ?>
+    <img src="/img/region.png" alt="" class="img-responsive">
 <?php endif; ?>
