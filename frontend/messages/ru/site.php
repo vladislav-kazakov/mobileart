@@ -1,0 +1,1 @@
+<?phpreturn [    'Site' => 'Памятник',    'Sites' => 'Памятники',    'Publications' => 'Публикации',];
