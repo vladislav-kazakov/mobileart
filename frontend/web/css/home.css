@@ -3,7 +3,7 @@
   min-height: 400px;
   padding: 40px 0;
   margin-bottom: 40px;
-  background: url("../img/bg03.jpg");
+  background: url("../img/bg03.jpg") no-repeat center top;
   color: #fff; }
   .banner .plate {
     background-color: rgba(0, 0, 0, 0.65);
