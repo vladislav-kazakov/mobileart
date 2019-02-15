@@ -9,6 +9,7 @@ use common\models\Internship;
 use common\models\Map;
 use common\models\MediaReport;
 use common\models\MediaReportImage;
+use common\models\Region;
 use common\models\Site;
 use common\models\News;
 use common\models\Partner;
@@ -134,5 +135,89 @@ class ManagerController extends Controller
         $model->delete();
 
         return $this->redirect(['manager/site']);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionRegion()
+    {
+        $regions = Region::find()->orderBy(['id' => SORT_DESC])->all();
+
+        return $this->render('region_list', ['regions' => $regions]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionRegionCreate()
+    {
+        $model = new Region();
+
+        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', "Данные внесены");
+
+                return $this->redirect(['manager/region-update', 'id' => $model->id]);
+            }
+
+            \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
+        }
+
+        return $this->render('region_create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
+     */
+    public function actionRegionUpdate($id)
+    {
+        $model = Region::find()->multilingual()->where(['id' => $id])->one();
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+            $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
+
+            if ($model->save()) {
+                $model->upload();
+                \Yii::$app->session->setFlash('success', "Данные внесены");
+
+                return $this->refresh();
+            }
+
+            \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
+        }
+
+
+        return $this->render('region_update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws HttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionRegionDelete($id)
+    {
+        $model = Region::findOne($id);
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        $model->delete();
+
+        return $this->redirect(['manager/region']);
     }
 }

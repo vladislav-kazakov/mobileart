@@ -69,10 +69,11 @@ class Site extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_en'], 'required'],
+            [['name', 'name_en', 'region_id'], 'required'],
             [['name', 'annotation', 'description', 'publication'], 'string'],
             [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
             ['image', 'string'],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
@@ -145,6 +146,7 @@ class Site extends ActiveRecord
             'publication_en' => 'Публикации на английском',
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
+            'region_id' => 'Регион',
         ];
     }
 

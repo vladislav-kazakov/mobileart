@@ -13,6 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <ul class="list-group">
         <li class="list-group-item">
+            <?= Html::a('Регионы', ['manager/region']) ?>
+        </li>
+        <li class="list-group-item">
             <?= Html::a('Памятники', ['manager/site']) ?>
         </li>
     </ul>
