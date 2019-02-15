@@ -69,7 +69,7 @@ class Site extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'x', 'y'], 'required'],
+            [['name', 'name_en'], 'required'],
             [['name', 'annotation', 'description', 'publication'], 'string'],
             [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
             ['image', 'string'],

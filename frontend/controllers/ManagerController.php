@@ -68,9 +68,10 @@ class ManagerController extends Controller
         $model = new Site();
 
         if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
-            $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
 
-            if ($model->save() and $model->upload()) {
+            if ($model->save()) {
+                $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
+                $model->upload();
                 \Yii::$app->session->setFlash('success', "Данные внесены");
 
                 return $this->redirect(['manager/site-update', 'id' => $model->id]);
