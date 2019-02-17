@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 
-$this->registerCssFile('css/home.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/home.css?201902172259', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 
 $this->title = Yii::$app->name;
 ?>
@@ -37,4 +37,8 @@ $this->title = Yii::$app->name;
     <br>
 </div>
 
-<img src="/img/region.png" alt="" class="img-responsive">
+<?php if (isset(Yii::$app->params['viewMapOnHome']) and Yii::$app->params['viewMapOnHome']): ?>
+    <?= $this->render('_map', ['regions' => $regions]) ?>
+<?php else: ?>
+    <img src="/img/region.png" alt="" class="img-responsive">
+<?php endif; ?>

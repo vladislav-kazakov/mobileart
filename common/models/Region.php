@@ -49,8 +49,9 @@ class Region extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_en'], 'required'],
+            [['name', 'name_en', 'x', 'y'], 'required'],
             [['name', 'annotation'], 'string'],
+            [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
         ];
     }
 
@@ -75,5 +76,13 @@ class Region extends ActiveRecord
             'annotation' => 'Аннотация',
             'annotation_en' => 'Аннотация на английском',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSites()
+    {
+        return $this->hasMany(Site::className(), ['region_id' => 'id']);
     }
 }

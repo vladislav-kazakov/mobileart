@@ -23,8 +23,8 @@
 
 .point {
   position: absolute;
-  width: 22px;
+  width: 30px;
   height: 30px;
-  background: url(/img/marker.png); }
+  background: url(/img/marker-region.png); }
 
 /*# sourceMappingURL=home.css.map */

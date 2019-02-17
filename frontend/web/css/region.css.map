@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,wBAAwB;EACtB,OAAO,EAAE,KAAK;EACd,MAAM,EAAE,iBAAiB;EACzB,OAAO,EAAE,gBAAgB;EACzB,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,IAAI;EACX,oCAAQ;IACN,eAAe,EAAE,IAAI;IACrB,MAAM,EAAE,iBAAiB",
+"sources": ["region.scss"],
+"names": [],
+"file": "region.css"
+}

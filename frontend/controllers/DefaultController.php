@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Region;
 use common\models\Site;
 use Yii;
 use yii\base\InvalidParamException;
@@ -74,10 +75,10 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $sites = Site::find()->all();
+        $regions = Region::find()->all();
 
         return $this->render('index', [
-            'sites' => $sites,
+            'regions' => $regions,
         ]);
     }
 

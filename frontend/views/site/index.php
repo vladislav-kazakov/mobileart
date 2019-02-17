@@ -10,6 +10,9 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('site', 'Sites');
 
+$this->params['breadcrumbs'] = [
+    $this->title,
+];
 
 $script = <<< JS
 

@@ -25,6 +25,7 @@ use Imagine\Image\Box;
  * @property float $y
  * @property integer $created_at
  * @property integer $updated_at
+ * @property object $region
  */
 class Site extends ActiveRecord
 {
@@ -148,6 +149,14 @@ class Site extends ActiveRecord
             'fileImage' => 'Изображение',
             'region_id' => 'Регион',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region_id']);
     }
 
     /**

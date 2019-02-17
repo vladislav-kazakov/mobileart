@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-/* @var $model \common\models\Site */
+/* @var $model \common\models\Region */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -11,10 +11,10 @@ use yii\captcha\Captcha;
 use common\models\News;
 use mihaildev\ckeditor\CKEditor;
 
-$this->title = 'Редактирование памятника';
+$this->title = 'Редактирование региона';
 $this->params['breadcrumbs'] = [
     ['label' => 'Управление контентом', 'url' => ['/manager/index']],
-    ['label' => 'Памятники', 'url' => ['/manager/site']],
+    ['label' => 'Регионы', 'url' => ['/manager/region']],
     $this->title,
 ];
 
@@ -30,7 +30,7 @@ $script = <<< JS
     $(document).ready(function () {
         $coord
         var map = $('#wrap-map'),
-            pointW = 22,
+            pointW = 30,
             pointH = 30;
         
         map.css('max-width', map.children().width());
@@ -40,7 +40,7 @@ $script = <<< JS
             var posX = $(this).offset().left,
                 posY = $(this).offset().top;
             x = (e.pageX - posX - pointW / 2) / $(this).width(),
-            y = (e.pageY - posY - pointH) / $(this).height();
+            y = (e.pageY - posY - pointH / 2) / $(this).height();
             
             $('#coord-x').val(x);
             $('#coord-y').val(y);
@@ -76,15 +76,16 @@ JS;
 
 $this->registerJs($script, yii\web\View::POS_READY);
 
+
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="clearfix">
-        <?= Html::a('Просмотр', ['site/view', 'id' => $model->id]) ?>
+        <?= Html::a('Просмотр', ['region/view', 'id' => $model->id]) ?>
         <div class="pull-right">
             <?= Html::a('Удалить', [
-                'manager/site-delete',
+                'manager/region-delete',
                 'id' => $model->id
             ], [
                 'class' => 'btn btn-danger',
@@ -98,10 +99,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
     <br>
 
-    <?= $this->render('_site_form', [
-        'model' => $model,
-        'data' => $data,
-    ]) ?>
+    <?= $this->render('_region_form', ['model' => $model]) ?>
 </div>
 
 <div class="form-group">
@@ -117,8 +115,8 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
     .point {
         position: absolute;
-        width: 22px;
+        width: 30px;
         height: 30px;
-        background: url(/img/marker.png);
+        background: url(/img/marker-region.png);
     }
 </style>

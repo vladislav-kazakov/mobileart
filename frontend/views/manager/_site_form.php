@@ -13,6 +13,13 @@ use common\models\Site;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
+
+        <div class="col-xs-6">
+            <?= $form->field($model, 'region_id')->dropDownList($data) ?>
+        </div>
+
+        <div class="clearfix"></div>
+
         <div class="col-xs-6">
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
         </div>

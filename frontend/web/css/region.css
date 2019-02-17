@@ -1,0 +1,11 @@
+.region-item, .site-item {
+  display: block;
+  border: solid 2px #e1e1e1;
+  padding: 0 15px 15px 15px;
+  margin-bottom: 25px;
+  color: #000; }
+  .region-item:hover, .site-item:hover {
+    text-decoration: none;
+    border: solid 2px #7288e1; }
+
+/*# sourceMappingURL=region.css.map */

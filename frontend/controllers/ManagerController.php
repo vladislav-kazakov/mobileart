@@ -15,6 +15,7 @@ use common\models\News;
 use common\models\Partner;
 use common\models\University;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\UploadedFile;
@@ -68,7 +69,10 @@ class ManagerController extends Controller
     {
         $model = new Site();
 
-        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+        $regions = Region::find()->all();
+        $data = ArrayHelper::map($regions, 'id', 'name');
+
+        if ($model->load(\Yii::$app->request->post())) {
 
             if ($model->save()) {
                 $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
@@ -83,6 +87,7 @@ class ManagerController extends Controller
 
         return $this->render('site_create', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 
@@ -98,7 +103,10 @@ class ManagerController extends Controller
             throw new HttpException(500);
         }
 
-        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+        $regions = Region::find()->all();
+        $data = ArrayHelper::map($regions, 'id', 'name');
+
+        if ($model->load(\Yii::$app->request->post())) {
             $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
 
             if ($model->save()) {
@@ -114,6 +122,7 @@ class ManagerController extends Controller
 
         return $this->render('site_update', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 
@@ -154,7 +163,7 @@ class ManagerController extends Controller
     {
         $model = new Region();
 
-        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+        if ($model->load(\Yii::$app->request->post())) {
 
             if ($model->save()) {
                 \Yii::$app->session->setFlash('success', "Данные внесены");
@@ -182,11 +191,9 @@ class ManagerController extends Controller
             throw new HttpException(500);
         }
 
-        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
-            $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
+        if ($model->load(\Yii::$app->request->post())) {
 
             if ($model->save()) {
-                $model->upload();
                 \Yii::$app->session->setFlash('success', "Данные внесены");
 
                 return $this->refresh();
@@ -216,7 +223,11 @@ class ManagerController extends Controller
             throw new HttpException(500);
         }
 
-        $model->delete();
+        if (empty($model->sites)) {
+            $model->delete();
+        } else {
+            \Yii::$app->session->setFlash('error', 'Невозможно удалить данный регион, так как к нему привязаны памятники');
+        }
 
         return $this->redirect(['manager/region']);
     }
