@@ -2,46 +2,81 @@
 
 /* @var $this yii\web\View */
 
+/* @var $site Site */
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Site;
+use common\models\Find;
 
 $this->title = $site->name;
 
+$this->params['breadcrumbs'] = [
+    ['label' => Yii::t('app', 'Regions'), 'url' => ['region/index']],
+    ['label' => $site->region->name, 'url' => ['region/view', 'id' => $site->region->id]],
+    $this->title,
+];
+
+
+$script = <<< JS
+
+$(document).ready(function() {
+    $('.collection').masonry();
+})
+
+JS;
+
+$this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJs($script, yii\web\View::POS_READY);
 $this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 ?>
 
 
-<h1><?= Html::encode($site->name) ?></h1>
 <div class="row">
-    <div class="col-xs-12 col-sm-6">
-        <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-        <?php if (Yii::$app->user->can('manager')): ?>
-            <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
-        <?php endif; ?>
-        <?= $site->description ?>
-    </div>
+    <?php if (empty($site->image)): ?>
+        <div class="col-xs-12">
+            <?php if (Yii::$app->user->can('manager')): ?>
+                <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
+            <?php endif; ?>
+            <h1><?= Html::encode($site->name) ?></h1>
+            <?= $site->description ?>
+        </div>
+    <?php else: ?>
+        <div class="col-xs-12 col-sm-6">
+            <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <?php if (Yii::$app->user->can('manager')): ?>
+                <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
+            <?php endif; ?>
+            <h1><?= Html::encode($site->name) ?></h1>
+            <?= $site->description ?>
+        </div>
+    <?php endif; ?>
 </div>
 
-<?php if (!empty($finds)): ?>
-    <?php foreach ($finds as $find): ?>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
-                <div class="row">
-                    <?= Html::img('/' . Site::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
-                </div>
-                <h3>
-                    <?= $find->name ?>
-                </h3>
-                <?= $find->annotation ?>
-            </a>
-        </div>
-    <?php endforeach; ?>
+<?php if (!empty($site->finds)): ?>
+    <h2><?= Yii::t('app', 'Collection') ?></h2>
+    <div class="row collection">
+        <?php foreach ($site->finds as $find): ?>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
+                    <?php if (!empty($site->image)): ?>
+                        <div class="row">
+                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
+                        </div>
+                    <?php endif; ?>
+                    <h4>
+                        <?= $find->name ?>
+                    </h4>
+                    <?= $find->annotation ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>
 
-<?php if (!empty($site->description)): ?>
-    <h3><?= Yii::t('site', 'Publications') ?></h3>
-    <?= $site->description ?>
+<?php if (!empty($site->publication)): ?>
+    <h3><?= Yii::t('app', 'Publications') ?></h3>
+    <?= $site->publication ?>
 <?php endif; ?>

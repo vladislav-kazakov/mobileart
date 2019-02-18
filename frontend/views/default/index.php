@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 
 
-$this->registerCssFile('css/home.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/home.css?201902172259', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 
 $this->title = Yii::$app->name;
 ?>
@@ -28,7 +28,7 @@ $this->title = Yii::$app->name;
             <?= Yii::t('home', 'More than 50 archaeological sites dating back to the Initial and Early Upper Paleolithic have been studied in Mongolia, the Altai, the Cis-Baikal and Trans-Baikal, and Arctic Siberia.') ?>
         </p>
         <p>
-            <?= Yii::t('home', 'A large collection of personal ornaments was acquired from more than 20 Siberian archaeological sites. Today over 300 objects made of bone, ivory, ostrich eggshell, seashells, and soft stone are present. These complexes date back to 25,000 – 30,000 to 40,000 – 50,000 years BP.') ?>
+            <?= Yii::t('home', 'A large collection of personal ornaments was acquired from more than 20 Siberian archaeological sites. Today over 300 objects made of bone, ivory, ostrich eggshell, seashells, and soft stone are present. These complexes date back to 25,000 – 30,000 to 40,000 – 50,000 years ago.') ?>
 
         </p>
     </div>
@@ -37,4 +37,8 @@ $this->title = Yii::$app->name;
     <br>
 </div>
 
-<img src="/img/region.png" alt="" class="img-responsive">
+<?php if (isset(Yii::$app->params['viewMapOnHome']) and Yii::$app->params['viewMapOnHome']): ?>
+    <?= $this->render('_map', ['regions' => $regions]) ?>
+<?php else: ?>
+    <img src="/img/region.png" alt="" class="img-responsive">
+<?php endif; ?>

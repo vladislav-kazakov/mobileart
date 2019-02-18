@@ -2,13 +2,13 @@
 
 /* @var $this yii\web\View */
 
-/* @var $site \common\models\Site */
+/* @var $find \common\models\Find */
 
 use yii\helpers\Html;
-use common\models\Site;
+use common\models\Find;
 use yii\helpers\Url;
 
-$this->title = Yii::t('app', 'Sites');
+$this->title = Yii::t('app', 'Finds');
 
 $this->params['breadcrumbs'] = [
     $this->title,
@@ -17,30 +17,30 @@ $this->params['breadcrumbs'] = [
 $script = <<< JS
 
 $(document).ready(function() {
-    $('.sites').masonry();
+    $('.finds').masonry();
 })
 
 JS;
 
-$this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/find.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJs($script, yii\web\View::POS_READY);
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<?php if (!empty($sites)): ?>
-    <div class="sites row">
-        <?php foreach ($sites as $site): ?>
+<?php if (!empty($finds)): ?>
+    <div class="finds row">
+        <?php foreach ($finds as $find): ?>
             <div class="col-xs-12 col-sm-6">
-                <a href="<?= Url::to(['site/view', 'id' => $site->id]) ?>" class="site-item">
+                <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
                         <div class="row">
-                            <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
+                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
                         </div>
                         <h3>
-                            <?= $site->name ?>
+                            <?= $find->name ?>
                         </h3>
-                        <?= $site->annotation ?>
+                        <?= $find->annotation ?>
                 </a>
             </div>
         <?php endforeach; ?>

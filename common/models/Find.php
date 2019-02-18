@@ -13,18 +13,41 @@ use Imagine\Image\Box;
  * Find model
  *
  * @property integer $id
+ * @property integer $site_id
  * @property string $name
  * @property string $name_en
  * @property string $description
  * @property string $description_en
  * @property string $annotation
  * @property string $annotation_en
+ * @property string $publication
+ * @property string $publication_en
+ * @property string $technique
+ * @property string $technique_en
+ * @property string $traces_disposal
+ * @property string $traces_disposal_en
+ * @property string $storage_location
+ * @property string $storage_location_en
+ * @property string $inventory_number
+ * @property string $inventory_number_en
+ * @property string $museum_kamis
+ * @property string $museum_kamis_en
+ * @property string $size
+ * @property string $size_en
+ * @property string $material
+ * @property string $material_en
+ * @property string $dating
+ * @property string $dating_en
+ * @property string $culture
+ * @property string $culture_en
+ * @property string $author_excavation
+ * @property string $author_excavation_en
+ * @property integer $year
+ * @property integer $year_en
+ * @property string $link
+ * @property string $link_en
  * @property string $image
  * @property string $fileImage
- * @property float $x
- * @property float $y
- * @property integer $created_at
- * @property integer $updated_at
  */
 class Find extends ActiveRecord
 {
@@ -61,11 +84,11 @@ class Find extends ActiveRecord
                     'technique',
                     'traces_disposal',
                     'storage_location',
-                    'inventory number',
+                    'inventory_number',
                     'museum_kamis',
                     'size',
                     'material',
-                    'age',
+                    'dating',
                     'culture',
                     'author_excavation',
                     'year',
@@ -81,10 +104,11 @@ class Find extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'x', 'y'], 'required'],
-            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory number', 'museum_kamis', 'size', 'material', 'age', 'culture', 'author_excavation', 'year', 'link',], 'string'],
-            [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
+            [['name', 'name_en', 'site_id'], 'required'],
+            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link',], 'string'],
             ['image', 'string'],
+            ['year', 'integer'],
+            [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
@@ -147,6 +171,7 @@ class Find extends ActiveRecord
     public function attributeLabels()
     {
         return [
+            'site_id' => 'Памятник',
             'name' => 'Название',
             'name_en' => 'Название на английском',
             'description' => 'Описание',
@@ -161,16 +186,16 @@ class Find extends ActiveRecord
             'traces_disposal_en' => 'Следы утилизации на английском',
             'storage_location' => 'Место хранения',
             'storage_location_en' => 'Место хранения на английском',
-            'inventory number' => 'Инвентарный номер',
-            'inventory number_en' => 'Инвентарный номер на английском',
+            'inventory_number' => 'Инвентарный номер',
+            'inventory_number_en' => 'Инвентарный номер на английском',
             'museum_kamis' => 'Музейная КАМИС',
             'museum_kamis_en' => 'Музейная КАМИС на английском',
             'size' => 'Размеры',
             'size_en' => 'Размеры на английском',
             'material' => 'Материалы',
             'material_en' => 'Материалы на английском',
-            'age' => 'Возраст',
-            'age_en' => 'Возраст на английском',
+            'dating' => 'Возраст',
+            'dating_en' => 'Возраст на английском',
             'culture' => 'Культура',
             'culture_en' => 'Культура на английском',
             'author_excavation' => 'Автор раскопок',
@@ -182,6 +207,14 @@ class Find extends ActiveRecord
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSite()
+    {
+        return $this->hasOne(Site::className(), ['id' => 'site_id']);
     }
 
     /**

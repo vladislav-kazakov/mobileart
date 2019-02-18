@@ -13,6 +13,13 @@ use common\models\Site;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
+
+        <div class="col-xs-6">
+            <?= $form->field($model, 'region_id')->dropDownList($data) ?>
+        </div>
+
+        <div class="clearfix"></div>
+
         <div class="col-xs-6">
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
         </div>
@@ -26,7 +33,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -39,7 +46,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -55,7 +62,7 @@ use common\models\Site;
             <?= $form->field($model, 'description')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -69,7 +76,7 @@ use common\models\Site;
             <?= $form->field($model, 'description_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -85,7 +92,7 @@ use common\models\Site;
             <?= $form->field($model, 'publication')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -99,7 +106,7 @@ use common\models\Site;
             <?= $form->field($model, 'publication_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [

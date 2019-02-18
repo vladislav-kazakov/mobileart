@@ -42,7 +42,7 @@ AppAsset::register($this);
 
 
     <?php
-    $menuItems[] = ['label' => Yii::t('app', 'Sites'), 'url' => ['/site']];
+    $menuItems[] = ['label' => Yii::t('app', 'Regions'), 'url' => ['/region']];
 
     if (Yii::$app->user->can('manager')) {
         $menuItems[] = ['label' => Yii::t('app', 'Management'), 'url' => ['/manager']];

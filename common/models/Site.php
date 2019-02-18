@@ -25,6 +25,7 @@ use Imagine\Image\Box;
  * @property float $y
  * @property integer $created_at
  * @property integer $updated_at
+ * @property object $region
  */
 class Site extends ActiveRecord
 {
@@ -69,10 +70,11 @@ class Site extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_en'], 'required'],
+            [['name', 'name_en', 'region_id'], 'required'],
             [['name', 'annotation', 'description', 'publication'], 'string'],
             [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
             ['image', 'string'],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
@@ -145,7 +147,24 @@ class Site extends ActiveRecord
             'publication_en' => 'Публикации на английском',
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
+            'region_id' => 'Регион',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFinds()
+    {
+        return $this->hasMany(Find::className(), ['site_id' => 'id']);
     }
 
     /**
