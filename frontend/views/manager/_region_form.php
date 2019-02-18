@@ -26,7 +26,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -39,7 +39,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [

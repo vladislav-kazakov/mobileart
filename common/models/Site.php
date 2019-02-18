@@ -160,6 +160,14 @@ class Site extends ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFinds()
+    {
+        return $this->hasMany(Find::className(), ['site_id' => 'id']);
+    }
+
+    /**
      * Удаляем файл перед удалением записи
      *
      * @return bool

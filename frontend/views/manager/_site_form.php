@@ -33,7 +33,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -46,7 +46,7 @@ use common\models\Site;
             <?= $form->field($model, 'annotation_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -62,7 +62,7 @@ use common\models\Site;
             <?= $form->field($model, 'description')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -76,7 +76,7 @@ use common\models\Site;
             <?= $form->field($model, 'description_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -92,7 +92,7 @@ use common\models\Site;
             <?= $form->field($model, 'publication')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [
@@ -106,7 +106,7 @@ use common\models\Site;
             <?= $form->field($model, 'publication_en')->widget(CKEditor::className(),
                 [
                     'editorOptions' => [
-                        'preset' => 'basic',
+                        'preset' => 'standard',
                         'inline' => false,
                     ],
                     'options' => [

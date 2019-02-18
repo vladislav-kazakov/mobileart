@@ -2,18 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\Article;
-use common\models\CalendarEvent;
-use common\models\Document;
-use common\models\Internship;
-use common\models\Map;
-use common\models\MediaReport;
-use common\models\MediaReportImage;
 use common\models\Region;
 use common\models\Site;
-use common\models\News;
-use common\models\Partner;
-use common\models\University;
+use common\models\Find;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -49,6 +40,92 @@ class ManagerController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * @return string
+     */
+    public function actionRegion()
+    {
+        $regions = Region::find()->orderBy(['id' => SORT_DESC])->all();
+
+        return $this->render('region_list', ['regions' => $regions]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionRegionCreate()
+    {
+        $model = new Region();
+
+        if ($model->load(\Yii::$app->request->post())) {
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', "Данные внесены");
+
+                return $this->redirect(['manager/region-update', 'id' => $model->id]);
+            }
+
+            \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
+        }
+
+        return $this->render('region_create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
+     */
+    public function actionRegionUpdate($id)
+    {
+        $model = Region::find()->multilingual()->where(['id' => $id])->one();
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        if ($model->load(\Yii::$app->request->post())) {
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', "Данные внесены");
+
+                return $this->refresh();
+            }
+
+            \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
+        }
+
+
+        return $this->render('region_update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws HttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionRegionDelete($id)
+    {
+        $model = Region::findOne($id);
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        if (empty($model->sites)) {
+            $model->delete();
+        } else {
+            \Yii::$app->session->setFlash('error', 'Невозможно удалить данный регион, так как к нему привязаны памятники');
+        }
+
+        return $this->redirect(['manager/region']);
     }
 
     /**
@@ -149,33 +226,40 @@ class ManagerController extends Controller
     /**
      * @return string
      */
-    public function actionRegion()
+    public function actionFind()
     {
-        $regions = Region::find()->orderBy(['id' => SORT_DESC])->all();
+        $finds = Find::find()->orderBy(['id' => SORT_DESC])->all();
 
-        return $this->render('region_list', ['regions' => $regions]);
+        return $this->render('find_list', ['finds' => $finds]);
     }
 
     /**
      * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
-    public function actionRegionCreate()
+    public function actionFindCreate()
     {
-        $model = new Region();
+        $model = new Find();
+
+        $regions = Site::find()->all();
+        $data = ArrayHelper::map($regions, 'id', 'name');
 
         if ($model->load(\Yii::$app->request->post())) {
 
             if ($model->save()) {
+                $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
+                $model->upload();
                 \Yii::$app->session->setFlash('success', "Данные внесены");
 
-                return $this->redirect(['manager/region-update', 'id' => $model->id]);
+                return $this->redirect(['manager/find-update', 'id' => $model->id]);
             }
 
             \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
         }
 
-        return $this->render('region_create', [
+        return $this->render('find_create', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 
@@ -183,17 +267,22 @@ class ManagerController extends Controller
      * @return string|\yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionRegionUpdate($id)
+    public function actionFindUpdate($id)
     {
-        $model = Region::find()->multilingual()->where(['id' => $id])->one();
+        $model = Find::find()->multilingual()->where(['id' => $id])->one();
 
         if (empty($model)) {
             throw new HttpException(500);
         }
 
+        $regions = Site::find()->all();
+        $data = ArrayHelper::map($regions, 'id', 'name');
+
         if ($model->load(\Yii::$app->request->post())) {
+            $model->fileImage = UploadedFile::getInstance($model, 'fileImage');
 
             if ($model->save()) {
+                $model->upload();
                 \Yii::$app->session->setFlash('success', "Данные внесены");
 
                 return $this->refresh();
@@ -203,8 +292,9 @@ class ManagerController extends Controller
         }
 
 
-        return $this->render('region_update', [
+        return $this->render('find_update', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 
@@ -215,20 +305,16 @@ class ManagerController extends Controller
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function actionRegionDelete($id)
+    public function actionFindDelete($id)
     {
-        $model = Region::findOne($id);
+        $model = Find::findOne($id);
 
         if (empty($model)) {
             throw new HttpException(500);
         }
 
-        if (empty($model->sites)) {
-            $model->delete();
-        } else {
-            \Yii::$app->session->setFlash('error', 'Невозможно удалить данный регион, так как к нему привязаны памятники');
-        }
+        $model->delete();
 
-        return $this->redirect(['manager/region']);
+        return $this->redirect(['manager/find']);
     }
 }

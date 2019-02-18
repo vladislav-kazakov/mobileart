@@ -18,5 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <li class="list-group-item">
             <?= Html::a('Памятники', ['manager/site']) ?>
         </li>
+        <li class="list-group-item">
+            <?= Html::a('Коллекция', ['manager/find']) ?>
+        </li>
     </ul>
 </div>
