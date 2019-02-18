@@ -29,7 +29,7 @@ $this->registerCssFile('css/region.css', ['depends' => ['yii\bootstrap\Bootstrap
 <?= $region->annotation ?>
 
 <?php if (!empty($region->sites)): ?>
-    <h2><?= Yii::t('region', 'Sites') ?></h2>
+    <h2><?= Yii::t('app', 'Sites') ?></h2>
     <div class="row">
         <?php foreach ($region->sites as $site): ?>
             <div class="col-xs-12 col-sm-6 col-md-4">

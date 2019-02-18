@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use common\models\Site;
 use yii\helpers\Url;
 
-$this->title = Yii::t('site', 'Sites');
+$this->title = Yii::t('app', 'Sites');
 
 $this->params['breadcrumbs'] = [
     $this->title,

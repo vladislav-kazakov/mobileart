@@ -58,6 +58,6 @@ $this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPl
 <?php endif; ?>
 
 <?php if (!empty($site->description)): ?>
-    <h3><?= Yii::t('site', 'Publications') ?></h3>
+    <h3><?= Yii::t('app', 'Publications') ?></h3>
     <?= $site->description ?>
 <?php endif; ?>

@@ -1,1 +1,0 @@
-<?phpreturn [    'Region' => 'Регион',    'Site' => 'Памятник',    'Sites' => 'Памятники',    'Publications' => 'Публикации',];
