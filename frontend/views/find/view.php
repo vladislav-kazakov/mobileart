@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Find;
 use yii\bootstrap\Tabs;
+use common\models\FindImage;
 
 $this->title = $find->name;
 
@@ -101,46 +102,83 @@ if (!empty($find->link)) {
 
 ?>
 
-    <?php if (empty($find->image)): ?>
-        <div class="col-xs-12">
-            <div class="row">
-            <?php if (Yii::$app->user->can('manager')): ?>
-                <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
-            <?php endif; ?>
-            <h1><?= Html::encode($find->name) ?></h1>
-            <?= $find->description ?>
-        </div>
-        </div>
-    <?php else: ?>
-        <div class="col-xs-12 col-sm-6">
-            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
-            <br>
-        </div>
-<!--        <div class="col-xs-12 col-sm-6">-->
-            <?php if (Yii::$app->user->can('manager')): ?>
-                <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
-            <?php endif; ?>
-
-            <h1><?= Html::encode($find->name) ?></h1>
-
-            <?= $find->description ?>
-
-<!--            --><?php //if (!empty($find->technique)): ?>
-<!--                <b>--><?//= Yii::t('find', 'Manufacturing technique') ?><!--</b>-->
-<!--                --><?//= $find->technique ?>
-<!--            --><?php //endif; ?>
-
-<!--            --><?php //if (!empty($find->traces_disposal)): ?>
-<!--                <b>--><?//= Yii::t('find', 'Traces of disposal') ?><!--</b>-->
-<!--                --><?//= $find->traces_disposal ?>
-<!--            --><?php //endif; ?>
-<!--        </div>-->
+<?php if (empty($find->image)): ?>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+    <h1><?= Html::encode($find->name) ?></h1>
+    <?= $find->description ?>
+<?php else: ?>
+    <div class="pull-left poster">
+        <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
+    </div>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
 
-<div class="clearfix"></div>
+    <h1><?= Html::encode($find->name) ?></h1>
 
-<br>
+    <?= $find->description ?>
+
+<?php endif; ?>
+
+    <div class="clearfix"></div>
+
+    <br>
 
 <?php if (!empty($tabs)): ?>
     <?= Tabs::widget(['items' => $tabs]) ?>
+
+    <div class="clearfix"></div>
+
+    <br>
+<?php endif; ?>
+
+<?= newerton\fancybox\FancyBox::widget([
+    'target' => 'a[rel=findImages]',
+    'helpers' => true,
+    'mouse' => true,
+    'config' => [
+        'maxWidth' => '90%',
+        'maxHeight' => '90%',
+        'playSpeed' => 7000,
+        'padding' => 0,
+        'fitToView' => false,
+        'width' => '70%',
+        'height' => '70%',
+        'autoSize' => false,
+        'closeClick' => false,
+        'openEffect' => 'elastic',
+        'closeEffect' => 'elastic',
+        'prevEffect' => 'elastic',
+        'nextEffect' => 'elastic',
+        'closeBtn' => false,
+        'openOpacity' => true,
+        'helpers' => [
+            'title' => ['type' => 'float'],
+            'buttons' => [],
+            'thumbs' => ['width' => 68, 'height' => 50],
+            'overlay' => [
+                'css' => [
+                    'background' => 'rgba(0, 0, 0, 0.8)'
+                ]
+            ]
+        ],
+    ]
+]) ?>
+
+<?php if (!empty($find->images)): ?>
+    <div class="row images">
+        <?php foreach ($find->images as $item): ?>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="image">
+                    <?= Html::a(Html::img('/' . FindImage::DIR_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
+                        'class' => 'img-responsive img-thumbnail'
+                    ]), '/' . FindImage::DIR_IMAGE . '/' . $item->image, [
+                        'rel' => 'findImages'
+                    ]); ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>

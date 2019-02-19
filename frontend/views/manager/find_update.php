@@ -6,10 +6,6 @@
 /* @var $model \common\models\Find */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
-use common\models\News;
-use mihaildev\ckeditor\CKEditor;
 
 $this->title = 'Редактирование находки';
 $this->params['breadcrumbs'] = [
@@ -19,29 +15,28 @@ $this->params['breadcrumbs'] = [
 ];
 
 ?>
-<div class="container">
-    <h1><?= Html::encode($this->title) ?></h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="clearfix">
-        <?= Html::a('Просмотр', ['find/view', 'id' => $model->id]) ?>
-        <div class="pull-right">
-            <?= Html::a('Удалить', [
-                'manager/find-delete',
-                'id' => $model->id
-            ], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Вы уверены, что хотите удалить?',
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </div>
+<div class="clearfix">
+    <?= Html::a('Просмотр', ['find/view', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Дополнительные изображения', ['manager/find-image', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <div class="pull-right">
+        <?= Html::a('Удалить', [
+            'manager/find-delete',
+            'id' => $model->id
+        ], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Вы уверены, что хотите удалить?',
+                'method' => 'post',
+            ],
+        ]) ?>
     </div>
-
-    <br>
-
-    <?= $this->render('_find_form', [
-        'model' => $model,
-        'data' => $data,
-    ]) ?>
 </div>
+
+<br>
+
+<?= $this->render('_find_form', [
+    'model' => $model,
+    'data' => $data,
+]) ?>

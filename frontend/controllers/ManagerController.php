@@ -2,10 +2,12 @@
 
 namespace frontend\controllers;
 
+use common\models\FindImage;
 use common\models\Region;
 use common\models\Site;
 use common\models\Find;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -29,6 +31,15 @@ class ManagerController extends Controller
                         'allow' => true,
                         'roles' => ['manager'],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'region-delete' => ['post'],
+                    'site-delete' => ['post'],
+                    'find-delete' => ['post'],
+                    'image-delete' => ['post'],
                 ],
             ],
         ];
@@ -316,5 +327,49 @@ class ManagerController extends Controller
         $model->delete();
 
         return $this->redirect(['manager/find']);
+    }
+
+    public function actionFindImage($id)
+    {
+        $model = Find::find()->multilingual()->where(['id' => $id])->one();
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        if ($model->load(\Yii::$app->request->post())) {
+            $model->fileImages = UploadedFile::getInstances($model, 'fileImages');
+            if ($model->uploadImages()) {
+                \Yii::$app->session->setFlash('success', "Данные внесены");
+                return $this->refresh();
+            }
+
+            \Yii::$app->session->setFlash('error', "Не удалось сохранить изменения<br>" . print_r($model->errors, true));
+        }
+
+        return $this->render('find_image', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws HttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionImageDelete($id)
+    {
+        $model = FindImage::findOne($id);
+
+        if (empty($model)) {
+            throw new HttpException(500);
+        }
+
+        $find = $model->find;
+        $model->delete();
+
+        return $this->redirect(['manager/find-image', 'id' => $find->id]);
     }
 }
