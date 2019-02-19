@@ -1,1 +1,1 @@
-<br><?= $content ?>
+<br><div class="col-xs-12">    <?= $content ?></div>

@@ -18,6 +18,15 @@ class m190214_043111_create_find_table extends Migration
             'image' => $this->string(),
         ]);
 
+        $this->addForeignKey(
+            'fk-find-site',
+            'find',
+            'site_id',
+            'site',
+            'id',
+            'CASCADE'
+        );
+
         $this->createTable('find_language', [
             'id' => $this->primaryKey(),
             'find_id' => $this->integer()->notNull(),
@@ -39,15 +48,6 @@ class m190214_043111_create_find_table extends Migration
             'year' => $this->integer(4)->comment('Год'),
             'link' => $this->text()->comment('Ссылки'),
         ]);
-
-        $this->addForeignKey(
-            'fk-site-find',
-            'site',
-            'id',
-            'find',
-            'site_id',
-            'CASCADE'
-        );
 
         $this->addForeignKey(
             'fk-find_language-find',
@@ -91,8 +91,8 @@ class m190214_043111_create_find_table extends Migration
             'find_language'
         );
         $this->dropForeignKey(
-            'fk-site-find',
-            'site'
+            'fk-find-site',
+            'find'
         );
 
         $this->dropTable('find_language');

@@ -77,32 +77,30 @@ JS;
 $this->registerJs($script, yii\web\View::POS_READY);
 
 ?>
-<div class="container">
-    <h1><?= Html::encode($this->title) ?></h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="clearfix">
-        <?= Html::a('Просмотр', ['site/view', 'id' => $model->id]) ?>
-        <div class="pull-right">
-            <?= Html::a('Удалить', [
-                'manager/site-delete',
-                'id' => $model->id
-            ], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Вы уверены, что хотите удалить?',
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </div>
+<div class="clearfix">
+    <?= Html::a('Просмотр', ['site/view', 'id' => $model->id]) ?>
+    <div class="pull-right">
+        <?= Html::a('Удалить', [
+            'manager/site-delete',
+            'id' => $model->id
+        ], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Вы уверены, что хотите удалить?',
+                'method' => 'post',
+            ],
+        ]) ?>
     </div>
-
-    <br>
-
-    <?= $this->render('_site_form', [
-        'model' => $model,
-        'data' => $data,
-    ]) ?>
 </div>
+
+<br>
+
+<?= $this->render('_site_form', [
+    'model' => $model,
+    'data' => $data,
+]) ?>
 
 <div class="form-group">
     <div id="wrap-map">

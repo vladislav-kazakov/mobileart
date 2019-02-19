@@ -28,32 +28,26 @@ JS;
 
 $this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJs($script, yii\web\View::POS_READY);
-$this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/site.css?201902191652', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 ?>
 
 
-<div class="row">
-    <?php if (empty($site->image)): ?>
-        <div class="col-xs-12">
-            <?php if (Yii::$app->user->can('manager')): ?>
-                <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
-            <?php endif; ?>
-            <h1><?= Html::encode($site->name) ?></h1>
-            <?= $site->description ?>
-        </div>
-    <?php else: ?>
-        <div class="col-xs-12 col-sm-6">
-            <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <?php if (Yii::$app->user->can('manager')): ?>
-                <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
-            <?php endif; ?>
-            <h1><?= Html::encode($site->name) ?></h1>
-            <?= $site->description ?>
-        </div>
+<?php if (empty($site->image)): ?>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
-</div>
+    <h1><?= Html::encode($site->name) ?></h1>
+    <?= $site->description ?>
+<?php else: ?>
+    <div class="pull-left poster">
+        <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
+    </div>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+    <h1><?= Html::encode($site->name) ?></h1>
+    <?= $site->description ?>
+<?php endif; ?>
 
 <?php if (!empty($site->finds)): ?>
     <h2><?= Yii::t('app', 'Collection') ?></h2>
@@ -61,7 +55,7 @@ $this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPl
         <?php foreach ($site->finds as $find): ?>
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
-                    <?php if (!empty($site->image)): ?>
+                    <?php if (!empty($find->image)): ?>
                         <div class="row">
                             <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
                         </div>
