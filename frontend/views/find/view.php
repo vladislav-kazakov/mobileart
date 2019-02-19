@@ -19,7 +19,7 @@ $this->params['breadcrumbs'] = [
     $this->title,
 ];
 
-$this->registerCssFile('css/find.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/find.css?201902191707', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 
 $tabs = [];
 
