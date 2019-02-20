@@ -31,6 +31,39 @@ $this->registerJs($script, yii\web\View::POS_READY);
 $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 ?>
 
+<?= newerton\fancybox\FancyBox::widget([
+    'target' => 'a[rel=findImages]',
+    'helpers' => true,
+    'mouse' => true,
+    'config' => [
+        'maxWidth' => '90%',
+        'maxHeight' => '90%',
+        'playSpeed' => 7000,
+        'padding' => 0,
+        'fitToView' => false,
+        'width' => '70%',
+        'height' => '70%',
+        'autoSize' => false,
+        'closeClick' => false,
+        'openEffect' => 'elastic',
+        'closeEffect' => 'elastic',
+        'prevEffect' => 'elastic',
+        'nextEffect' => 'elastic',
+        'closeBtn' => false,
+        'openOpacity' => true,
+        'helpers' => [
+            'title' => ['type' => 'float'],
+            'buttons' => [],
+            'thumbs' => ['width' => 68, 'height' => 50],
+            'overlay' => [
+                'css' => [
+                    'background' => 'rgba(0, 0, 0, 0.8)'
+                ]
+            ]
+        ],
+    ]
+]) ?>
+
 
 <?php if (empty($site->image)): ?>
     <?php if (Yii::$app->user->can('manager')): ?>
@@ -40,7 +73,11 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
     <?= $site->description ?>
 <?php else: ?>
     <div class="pull-left poster">
-        <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
+        <?= Html::a(Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, [
+            'class' => 'img-responsive'
+        ]), '/' . Site::DIR_IMAGE . '/' . $site->image, [
+            'rel' => 'findImages'
+        ]); ?>
     </div>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
