@@ -8,4 +8,15 @@
     text-decoration: none;
     border: solid 2px #7288e1; }
 
+#wrap-map {
+  width: 100%;
+  position: relative;
+  margin-top: 20px; }
+
+.point {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url(/img/marker-region.png); }
+
 /*# sourceMappingURL=region.css.map */

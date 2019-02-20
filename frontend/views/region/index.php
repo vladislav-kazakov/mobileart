@@ -30,16 +30,19 @@ $this->registerJs($script, yii\web\View::POS_READY);
 <h1><?= Html::encode($this->title) ?></h1>
 
 <?php if (!empty($regions)): ?>
-    <div class="regions row">
+<!--    <div class="regions row">-->
+    <div class="list-group">
         <?php foreach ($regions as $region): ?>
-            <div class="col-xs-12 col-sm-6">
-                <a href="<?= Url::to(['region/view', 'id' => $region->id]) ?>" class="region-item">
-                        <h3>
-                            <?= $region->name ?>
-                        </h3>
-                        <?= $region->annotation ?>
-                </a>
-            </div>
+            <a class="list-group-item region" href="<?= Url::to(['region/view', 'id' => $region->id]) ?>" id="region-<?= $region->id ?>">
+                <?= $region->name ?>
+                <span class="badge"><?= Yii::t('app', 'number of sites {n}', ['n' => count($region->sites)])?></span>
+            </a>
         <?php endforeach; ?>
     </div>
+<?php endif; ?>
+
+<?php if (isset(Yii::$app->params['viewMapOnHome']) and Yii::$app->params['viewMapOnHome']): ?>
+    <?= $this->render('_map', ['regions' => $regions]) ?>
+<?php else: ?>
+    <img src="/img/region.png" alt="" class="img-responsive">
 <?php endif; ?>
