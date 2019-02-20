@@ -102,38 +102,6 @@ if (!empty($find->link)) {
 
 ?>
 
-<?php if (empty($find->image)): ?>
-    <?php if (Yii::$app->user->can('manager')): ?>
-        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
-    <?php endif; ?>
-    <h1><?= Html::encode($find->name) ?></h1>
-    <?= $find->description ?>
-<?php else: ?>
-    <div class="pull-left poster">
-        <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
-    </div>
-    <?php if (Yii::$app->user->can('manager')): ?>
-        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
-    <?php endif; ?>
-
-    <h1><?= Html::encode($find->name) ?></h1>
-
-    <?= $find->description ?>
-
-<?php endif; ?>
-
-    <div class="clearfix"></div>
-
-    <br>
-
-<?php if (!empty($tabs)): ?>
-    <?= Tabs::widget(['items' => $tabs]) ?>
-
-    <div class="clearfix"></div>
-
-    <br>
-<?php endif; ?>
-
 <?= newerton\fancybox\FancyBox::widget([
     'target' => 'a[rel=findImages]',
     'helpers' => true,
@@ -166,6 +134,42 @@ if (!empty($find->link)) {
         ],
     ]
 ]) ?>
+
+<?php if (empty($find->image)): ?>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+    <h1><?= Html::encode($find->name) ?></h1>
+    <?= $find->description ?>
+<?php else: ?>
+    <div class="pull-left poster">
+        <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, [
+            'class' => 'img-responsive'
+        ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
+            'rel' => 'findImages'
+        ]); ?>
+    </div>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+
+    <h1><?= Html::encode($find->name) ?></h1>
+
+    <?= $find->description ?>
+
+<?php endif; ?>
+
+    <div class="clearfix"></div>
+
+    <br>
+
+<?php if (!empty($tabs)): ?>
+    <?= Tabs::widget(['items' => $tabs]) ?>
+
+    <div class="clearfix"></div>
+
+    <br>
+<?php endif; ?>
 
 <?php if (!empty($find->images)): ?>
     <div class="row images">

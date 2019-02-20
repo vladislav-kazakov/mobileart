@@ -53,7 +53,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
     <h2><?= Yii::t('app', 'Collection') ?></h2>
     <div class="row collection">
         <?php foreach ($site->finds as $find): ?>
-            <div class="col-xs-6 col-sm-4 col-md-3">
+            <div class="col-xs-12 col-sm-4 col-md-3">
                 <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
                     <?php if (!empty($find->image)): ?>
                         <div class="row">
