@@ -245,7 +245,7 @@ if (!empty($find->link)) {
     ]
 ]) ?>
 
-<?php if (empty($find->image)): ?>
+<?php if (empty($find->image) and empty($find->three_d)): ?>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
@@ -253,11 +253,15 @@ if (!empty($find->link)) {
     <?= $find->description ?>
 <?php else: ?>
     <div class="pull-left poster">
-        <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
-            'class' => 'img-responsive'
-        ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
-            'rel' => 'findImages'
-        ]); ?>
+        <?php if (empty($find->three_d)): ?>
+            <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
+                'class' => 'img-responsive'
+            ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
+                'rel' => 'findImages'
+            ]); ?>
+        <?php else: ?>
+            <?= $find->three_d ?>
+        <?php endif; ?>
     </div>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
@@ -283,18 +287,31 @@ if (!empty($find->link)) {
     <br>
 <?php endif; ?>
 
-<?php if (!empty($find->images)): ?>
+<?php if (!empty($find->images) or !empty($find->three_d)): ?>
     <div class="row images">
-        <?php foreach ($find->images as $item): ?>
+        <?php if (!empty($find->three_d)): ?>
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="image">
-                    <?= Html::a(Html::img('/' . FindImage::DIR_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
-                        'class' => 'img-responsive img-thumbnail'
-                    ]), '/' . FindImage::DIR_IMAGE . '/' . $item->image, [
+                    <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
+                        'class' => 'img-responsive'
+                    ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
                         'rel' => 'findImages'
                     ]); ?>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if (!empty($find->images)): ?>
+            <?php foreach ($find->images as $item): ?>
+                <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="image">
+                        <?= Html::a(Html::img('/' . FindImage::DIR_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
+                            'class' => 'img-responsive img-thumbnail'
+                        ]), '/' . FindImage::DIR_IMAGE . '/' . $item->image, [
+                            'rel' => 'findImages'
+                        ]); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 <?php endif; ?>
