@@ -18,85 +18,195 @@ $this->params['breadcrumbs'] = [
     ['label' => $find->site->name, 'url' => ['site/view', 'id' => $find->site->id]],
     $this->title,
 ];
+$script = <<< JS
+        
+     $('[data-toggle="tooltip"]').tooltip();
+    
+    $(".tab-header")
+    .click(function() {
+        $(this).tooltip('hide');
+    })
 
+JS;
+
+$this->registerJs($script, yii\web\View::POS_READY);
 $this->registerCssFile('css/find.css?201902191707', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 
 $tabs = [];
 
 if (!empty($find->technique)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Manufacturing technique'),
-        'content' => $this->render('_find_tab', ['content' => $find->technique]),
+        'label' => '<i class="fas fa-swatchbook hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Manufacturing technique') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Manufacturing technique'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Manufacturing technique'),
+            'content' => $find->technique
+        ]),
     ];
 }
 
 if (!empty($find->traces_disposal)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Traces of disposal'),
-        'content' => $this->render('_find_tab', ['content' => $find->traces_disposal]),
+        'label' => '<i class="fas fa-trash-alt  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Traces of disposal') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Traces of disposal'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Traces of disposal'),
+            'content' => $find->traces_disposal
+        ]),
     ];
 }
 
 if (!empty($find->storage_location)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Storage location'),
-        'content' => $this->render('_find_tab', ['content' => $find->storage_location]),
+        'label' => '<i class="fas fa-warehouse  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Storage location') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Storage location'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Storage location'),
+            'content' => $find->storage_location
+        ]),
     ];
 }
 
 if (!empty($find->inventory_number)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Inventory number'),
-        'content' => $this->render('_find_tab', ['content' => $find->inventory_number]),
+        'label' => '<i class="fas fa-barcode  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Inventory number') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Inventory number'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Inventory number'),
+            'content' => $find->inventory_number
+        ]),
     ];
 }
 
 if (!empty($find->museum_kamis)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'The Museum KAMIS'),
-        'content' => $this->render('_find_tab', ['content' => $find->museum_kamis]),
+        'label' => '<i class="fas fa-external-link-square-alt  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'The Museum KAMIS') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'The Museum KAMIS'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'The Museum KAMIS'),
+            'content' => $find->museum_kamis
+        ]),
     ];
 }
 
 if (!empty($find->size)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Size'),
-        'content' => $this->render('_find_tab', ['content' => $find->size]),
+        'label' => '<i class="fas fa-ruler-combined  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Size') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Size'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Size'),
+            'content' => $find->size
+        ]),
     ];
 }
 
 if (!empty($find->material)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Material'),
-        'content' => $this->render('_find_tab', ['content' => $find->material]),
+        'label' => '<i class="fas fa-splotch  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Material') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Material'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Material'),
+            'content' => $find->material
+        ]),
     ];
 }
 
 if (!empty($find->dating)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Dating'),
-        'content' => $this->render('_find_tab', ['content' => $find->dating]),
+        'label' => '<i class="fas fa-hourglass-half  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Dating') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Dating'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Dating'),
+            'content' => $find->dating
+        ]),
     ];
 }
 
 if (!empty($find->culture)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Culture'),
-        'content' => $this->render('_find_tab', ['content' => $find->culture]),
+        'label' => '<i class="fas fa-archway  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Culture') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Culture'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Culture'),
+            'content' => $find->culture
+        ]),
     ];
 }
 
 if (!empty($find->author_excavation)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'The author of the excavations'),
-        'content' => $this->render('_find_tab', ['content' => $find->author_excavation . (!empty($find->year) ? '<br>' . $find->year : null)]),
+        'label' => '<i class="fas fa-male  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'The author of the excavations') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'The author of the excavations'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'The author of the excavations'),
+            'content' => $find->author_excavation . (!empty($find->year) ? '<br>' . $find->year : null)
+        ]),
     ];
 }
 
 if (!empty($find->link)) {
     $tabs[] = [
-        'label' => Yii::t('find', 'Links'),
-        'content' => $this->render('_find_tab', ['content' => $find->link]),
+        'label' => '<i class="fas fa-link  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Links') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Links'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Links'),
+            'content' => $find->link
+        ]),
     ];
 }
 
@@ -164,8 +274,10 @@ if (!empty($find->link)) {
     <br>
 
 <?php if (!empty($tabs)): ?>
-    <?= Tabs::widget(['items' => $tabs]) ?>
-
+    <?= Tabs::widget([
+        'encodeLabels' => false,
+        'items' => $tabs,
+    ]) ?>
     <div class="clearfix"></div>
 
     <br>
