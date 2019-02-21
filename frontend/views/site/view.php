@@ -73,7 +73,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
     <?= $site->description ?>
 <?php else: ?>
     <div class="pull-left poster">
-        <?= Html::a(Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, [
+        <?= Html::a(Html::img('/' . Site::DIR_IMAGE . '/' . $site->thumbnailImage, [
             'class' => 'img-responsive'
         ]), '/' . Site::DIR_IMAGE . '/' . $site->image, [
             'rel' => 'findImages'
@@ -94,7 +94,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
                 <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
                     <?php if (!empty($find->image)): ?>
                         <div class="row">
-                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
+                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, ['class' => 'img-responsive']) ?>
                         </div>
                     <?php endif; ?>
                     <h4>

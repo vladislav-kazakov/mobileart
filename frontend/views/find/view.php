@@ -143,7 +143,7 @@ if (!empty($find->link)) {
     <?= $find->description ?>
 <?php else: ?>
     <div class="pull-left poster">
-        <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, [
+        <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
             'class' => 'img-responsive'
         ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
             'rel' => 'findImages'
