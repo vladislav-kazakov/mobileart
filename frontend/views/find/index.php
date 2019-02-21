@@ -32,10 +32,10 @@ $this->registerJs($script, yii\web\View::POS_READY);
 <?php if (!empty($finds)): ?>
     <div class="finds row">
         <?php foreach ($finds as $find): ?>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-6 col-sm-4 col-sm-3">
                 <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
                         <div class="row">
-                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
+                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, ['class' => 'img-responsive']) ?>
                         </div>
                         <h3>
                             <?= $find->name ?>

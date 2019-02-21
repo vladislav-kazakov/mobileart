@@ -315,7 +315,7 @@ use common\models\Find;
         </div>
         <?php if (isset($model->id) and !empty($model->id)): ?>
             <div class="col-xs-6">
-                <?= Html::img('/' . Find::DIR_IMAGE . '/' . $model->image, ['class' => 'img-responsive']) ?>
+                <?= Html::img('/' . Find::DIR_IMAGE . '/' . $model->thumbnailImage, ['class' => 'img-responsive']) ?>
                 <br>
             </div>
         <?php endif; ?>

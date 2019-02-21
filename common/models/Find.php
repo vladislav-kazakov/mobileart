@@ -50,6 +50,7 @@ use Imagine\Image\Box;
  * @property string $fileImage
  * @property string $images
  * @property string $fileImages
+ * @property string $thumbnailImage,
  */
 class Find extends ActiveRecord
 {
@@ -57,6 +58,7 @@ class Find extends ActiveRecord
     const DIR_IMAGE = 'uploads/find';
     const THUMBNAIL_W = 800;
     const THUMBNAIL_H = 500;
+    const THUMBNAIL_PREFIX = 'thumbnail_';
     const SCENARIO_CREATE = 'create';
     const COUNT_SYB = 500;
 
@@ -148,6 +150,10 @@ class Find extends ActiveRecord
 
             if (!empty($this->image) and file_exists($path . '/' . $this->image)) {
                 unlink($path . '/' . $this->image);
+
+                if (file_exists($path . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
+                    unlink($path . '/' . self::THUMBNAIL_PREFIX . $this->image);
+                }
             }
 
             FileHelper::createDirectory($path);
@@ -156,9 +162,12 @@ class Find extends ActiveRecord
             $this->fileImage->saveAs($path . '/' . $newName . '.' . $this->fileImage->extension);
             $this->image = $newName . '.' . $this->fileImage->extension;
 
-//            Image::thumbnail($path . '/' . $newName . '.' . $this->fileImage->extension, self::THUMBNAIL_W, self::THUMBNAIL_H)
-//                ->resize(new Box(self::THUMBNAIL_W, self::THUMBNAIL_H))
-//                ->save($path . '/' . $newName . '.' . $this->fileImage->extension, ['quality' => 80]);
+            $sizes = getimagesize($path . '/' . $newName . '.' . $this->fileImage->extension);
+            if ($sizes[0] > self::THUMBNAIL_W) {
+                Image::thumbnail($path . '/' . $newName . '.' . $this->fileImage->extension, self::THUMBNAIL_W, self::THUMBNAIL_H)
+                    ->resize(new Box(self::THUMBNAIL_W, self::THUMBNAIL_H))
+                    ->save($path . '/' . self::THUMBNAIL_PREFIX . $newName . '.' . $this->fileImage->extension, ['quality' => 80]);
+            }
 
             $this->scenario = self::SCENARIO_CREATE;
             return $this->save();
@@ -266,6 +275,20 @@ class Find extends ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public function getThumbnailImage()
+    {
+        $path = self::DIR_IMAGE;
+
+        if (file_exists($path . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
+            return self::THUMBNAIL_PREFIX . $this->image;
+        } else {
+            return $this->image;
+        }
+    }
+
+    /**
      * Удаляем файл перед удалением записи
      *
      * @return bool
@@ -277,6 +300,10 @@ class Find extends ActiveRecord
 
         if (!empty($this->image) and file_exists($baseDir . '/' . $this->image)) {
             unlink($baseDir . '/' . $this->image);
+
+            if (file_exists($baseDir . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
+                unlink($baseDir . '/' . self::THUMBNAIL_PREFIX . $this->image);
+            }
         }
 
         return parent::beforeDelete();
