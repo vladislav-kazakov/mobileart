@@ -51,6 +51,7 @@ use Imagine\Image\Box;
  * @property string $images
  * @property string $fileImages
  * @property string $thumbnailImage,
+ * @property string $three_d,
  */
 class Find extends ActiveRecord
 {
@@ -59,7 +60,6 @@ class Find extends ActiveRecord
     const THUMBNAIL_W = 800;
     const THUMBNAIL_H = 500;
     const THUMBNAIL_PREFIX = 'thumbnail_';
-    const SCENARIO_CREATE = 'create';
     const COUNT_SYB = 500;
 
     public $fileImage;
@@ -110,7 +110,7 @@ class Find extends ActiveRecord
     {
         return [
             [['name', 'name_en', 'site_id'], 'required'],
-            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link',], 'string'],
+            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d'], 'string'],
             ['image', 'string'],
             ['year', 'integer'],
             [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
@@ -125,17 +125,6 @@ class Find extends ActiveRecord
     public static function find()
     {
         return new MultilingualQuery(get_called_class());
-    }
-
-    /**
-     * @return array
-     */
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CREATE] = ['name', 'annotation', 'description', 'publication', 'image', 'x', 'y'];
-
-        return $scenarios;
     }
 
     /**
@@ -255,6 +244,7 @@ class Find extends ActiveRecord
             'link_en' => 'Ссылки на английском',
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
+            'three_d' => '3D модель',
         ];
     }
 

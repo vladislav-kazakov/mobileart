@@ -7,7 +7,15 @@ use common\models\Find;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Find */
-/* @var $form ActiveForm */
+/* @var $form ActiveForm */   $script = <<< JS
+        
+    $("textarea[name='Find[three_d]'").keyup(function() {
+        $(this).val($(this).val().replace(/width: 400px/gi, 'width: 100%'));
+    });
+
+JS;
+
+$this->registerJs($script, yii\web\View::POS_READY);
 ?>
 <div class="manager-_find_form">
 
@@ -319,12 +327,55 @@ use common\models\Find;
                 <br>
             </div>
         <?php endif; ?>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-6">
+            <button data-toggle="collapse" data-target="#instruction-3d" type="button" class="btn-link pull-right">Инструкция добавление 3D модели</button>
+
+            <div id="instruction-3d" class="collapse">
+                <ol>
+                    <li>
+                        На сайте <a href="https://3d.nsu.ru" target="_blank">3d.nsu.ru</a> находим нужную модель
+                    </li>
+                    <li>
+                        После загрузки модели жмем на кнопку настройки <img src="/img/3d-setting.png">
+                    </li>
+                    <li>
+                        Развернется спиок инструментов.
+                    </li>
+                    <li>
+                        Жмем на кнопку подделиться <img src="/img/3d-share.png">
+                    </li>
+                    <li>
+                        Появится модальное окно с кодом
+                    </li>
+                    <li>
+                        Нажмите на текст кода
+                    </li>
+                    <li>
+                        Текст кода должен автоматически выделиться и скопироваться в буфер
+                    </li>
+                    <li>
+                        Вставляем скопированный текст кода в поле "3D модель"
+                    </li>
+                </ol>
+            </div>
+            <?= $form->field($model, 'three_d')->textarea() ?>
+
+        </div>
+        <?php if (isset($model->id) and !empty($model->id)): ?>
+            <div class="col-xs-6">
+                <?= $model->three_d ?>
+                <br>
+            </div>
+        <?php endif; ?>
     </div>
-    <?php ActiveForm::end(); ?>
+</div>
+
+<div class="form-group">
+    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+</div>
+<?php ActiveForm::end(); ?>
 
 </div><!-- manager-_find_form -->
