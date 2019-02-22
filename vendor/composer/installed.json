@@ -62,17 +62,17 @@
     },
     {
         "name": "bower-asset/bootstrap",
-        "version": "v3.4.0",
-        "version_normalized": "3.4.0.0",
+        "version": "v3.4.1",
+        "version_normalized": "3.4.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twbs/bootstrap.git",
-            "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
+            "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
-            "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
+            "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
+            "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
             "shasum": null
         },
         "require": {
@@ -2153,7 +2153,8 @@
         "keywords": [
             "mock",
             "xunit"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "psr/http-message",
@@ -2297,6 +2298,64 @@
             }
         ],
         "description": "A polyfill for getallheaders."
+    },
+    {
+        "name": "rmrevin/yii2-fontawesome",
+        "version": "3.3.0",
+        "version_normalized": "3.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/rmrevin/yii2-fontawesome.git",
+            "reference": "9508e6619b1145ceae99064761f266507a97e6ab"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/rmrevin/yii2-fontawesome/zipball/9508e6619b1145ceae99064761f266507a97e6ab",
+            "reference": "9508e6619b1145ceae99064761f266507a97e6ab",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0",
+            "yiisoft/yii2": "^2.0.0"
+        },
+        "require-dev": {
+            "doctrine/instantiator": "1.0.*",
+            "phpdocumentor/reflection-docblock": "~3.1.0",
+            "phpunit/phpunit": "^4.8"
+        },
+        "time": "2019-02-12T15:08:29+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "asset-installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "rmrevin\\yii\\fontawesome\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Revin Roman",
+                "email": "roman@rmrevin.com",
+                "homepage": "https://rmrevin.com/"
+            }
+        ],
+        "description": "Asset Bundle for Yii2 with Font Awesome",
+        "keywords": [
+            "asset",
+            "awesome",
+            "bundle",
+            "font",
+            "yii"
+        ]
     },
     {
         "name": "sebastian/code-unit-reverse-lookup",
