@@ -62,6 +62,8 @@ class Find extends ActiveRecord
     const THUMBNAIL_PREFIX = 'thumbnail_';
     const COUNT_SYB = 500;
 
+    const SCENARIO_CREATE = 'create';
+
     public $fileImage;
     public $fileImages;
 
@@ -117,6 +119,50 @@ class Find extends ActiveRecord
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
             [['fileImages'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif', 'maxFiles' => 30],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_CREATE] = [
+            'site_id',
+            'name',
+            'name_en',
+            'description',
+            'description_en',
+            'annotation',
+            'annotation_en',
+            'publication',
+            'publication_en',
+            'technique',
+            'technique_en',
+            'traces_disposal',
+            'traces_disposal_en',
+            'storage_location',
+            'storage_location_en',
+            'inventory_number',
+            'inventory_number_en',
+            'museum_kamis',
+            'museum_kamis_en',
+            'size',
+            'size_en',
+            'material',
+            'material_en',
+            'dating',
+            'dating_en',
+            'culture',
+            'culture_en',
+            'author_excavation',
+            'author_excavation_en',
+            'year',
+            'year_en',
+            'link',
+            'link_en',
+            'image',
+            'three_d',
+        ];
+
+        return $scenarios;
     }
 
     /**
