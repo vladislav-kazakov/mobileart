@@ -24,7 +24,8 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "newerton/yii2-fancybox": "dev-master",
         "mihaildev/yii2-ckeditor": "*",
-        "yiisoft/yii2-imagine": "*"
+        "yiisoft/yii2-imagine": "*",
+        "rmrevin/yii2-fontawesome": "~3.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
