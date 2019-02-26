@@ -14,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property string $name_en
  * @property string $annotation
  * @property string $annotation_en
+ * @property string $publication
+ * @property string $publication_en
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -38,6 +40,7 @@ class Region extends ActiveRecord
                 'attributes' => [
                     'name',
                     'annotation',
+                    'publication',
                 ]
             ],
         ];
@@ -50,7 +53,7 @@ class Region extends ActiveRecord
     {
         return [
             [['name', 'name_en', 'x', 'y'], 'required'],
-            [['name', 'annotation'], 'string'],
+            [['name', 'annotation', 'publication'], 'string'],
             [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
         ];
     }
@@ -75,6 +78,8 @@ class Region extends ActiveRecord
             'name_en' => 'Название на английском',
             'annotation' => 'Аннотация',
             'annotation_en' => 'Аннотация на английском',
+            'publication' => 'Публикации',
+            'publication_en' => 'Публикации на английском',
         ];
     }
 

@@ -52,6 +52,36 @@ use common\models\Site;
         <div class="clearfix"></div>
 
         <div class="col-xs-6">
+            <?= $form->field($model, 'publication')->widget(CKEditor::className(),
+                [
+                    'editorOptions' => [
+                        'preset' => 'standard',
+                        'inline' => false,
+                    ],
+                    'options' => [
+                        'allowedContent' => true,
+                    ],
+
+                ]) ?>
+        </div>
+
+        <div class="col-xs-6">
+            <?= $form->field($model, 'publication_en')->widget(CKEditor::className(),
+                [
+                    'editorOptions' => [
+                        'preset' => 'standard',
+                        'inline' => false,
+                    ],
+                    'options' => [
+                        'allowedContent' => true,
+                    ],
+
+                ]) ?>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-xs-6">
             <?= $form->field($model, 'x')->textInput(['id' => 'coord-x']) ?>
         </div>
         <div class="col-xs-6">
