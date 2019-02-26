@@ -210,6 +210,22 @@ if (!empty($find->link)) {
     ];
 }
 
+if (!empty($find->publication)) {
+    $tabs[] = [
+        'label' => '<i class="fas fa-book"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Publications') . '</span>',
+        'headerOptions' => [
+            'class' => 'tab-header',
+            'data-toggle' => 'tooltip',
+            'data-placement' => 'top',
+            'title' => Yii::t('find', 'Publications'),
+        ],
+        'content' => $this->render('_find_tab', [
+            'title' => Yii::t('find', 'Publications'),
+            'content' => $find->publication
+        ]),
+    ];
+}
+
 ?>
 
 <?= newerton\fancybox\FancyBox::widget([
