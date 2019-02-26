@@ -49,3 +49,9 @@ $this->registerCssFile('css/region.css', ['depends' => ['yii\bootstrap\Bootstrap
 
     </div>
 <?php endif; ?>
+
+<?php if (!empty($region->publication)): ?>
+    <h3><?= Yii::t('app', 'Publications') ?></h3>
+    <?= $region->publication ?>
+<?php endif; ?>
+
