@@ -2,46 +2,112 @@
 
 /* @var $this yii\web\View */
 
+/* @var $site Site */
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Site;
+use common\models\Find;
 
 $this->title = $site->name;
 
-$this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->params['breadcrumbs'] = [
+    ['label' => Yii::t('app', 'Regions'), 'url' => ['region/index']],
+    ['label' => $site->region->name, 'url' => ['region/view', 'id' => $site->region->id]],
+    $this->title,
+];
+
+
+$script = <<< JS
+
+$(document).ready(function() {
+    $('.collection').masonry();
+})
+
+JS;
+
+$this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJs($script, yii\web\View::POS_READY);
+$this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 ?>
 
+<?= newerton\fancybox\FancyBox::widget([
+    'target' => 'a[rel=findImages]',
+    'helpers' => true,
+    'mouse' => true,
+    'config' => [
+        'maxWidth' => '90%',
+        'maxHeight' => '90%',
+        'playSpeed' => 7000,
+        'padding' => 0,
+        'fitToView' => false,
+        'width' => '70%',
+        'height' => '70%',
+        'autoSize' => false,
+        'closeClick' => false,
+        'openEffect' => 'elastic',
+        'closeEffect' => 'elastic',
+        'prevEffect' => 'elastic',
+        'nextEffect' => 'elastic',
+        'closeBtn' => false,
+        'openOpacity' => true,
+        'helpers' => [
+            'title' => ['type' => 'float'],
+            'buttons' => [],
+            'thumbs' => ['width' => 68, 'height' => 50],
+            'overlay' => [
+                'css' => [
+                    'background' => 'rgba(0, 0, 0, 0.8)'
+                ]
+            ]
+        ],
+    ]
+]) ?>
 
-<h1><?= Html::encode($site->name) ?></h1>
-<div class="row">
-    <div class="col-xs-12 col-sm-6">
-        <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->image, ['class' => 'img-responsive']) ?>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-        <?php if (Yii::$app->user->can('manager')): ?>
-            <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
-        <?php endif; ?>
-        <?= $site->description ?>
-    </div>
-</div>
 
-<?php if (!empty($finds)): ?>
-    <?php foreach ($finds as $find): ?>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
-                <div class="row">
-                    <?= Html::img('/' . Site::DIR_IMAGE . '/' . $find->image, ['class' => 'img-responsive']) ?>
-                </div>
-                <h3>
-                    <?= $find->name ?>
-                </h3>
-                <?= $find->annotation ?>
-            </a>
-        </div>
-    <?php endforeach; ?>
+<?php if (empty($site->image)): ?>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+    <h1><?= Html::encode($site->name) ?></h1>
+    <?= $site->description ?>
+<?php else: ?>
+    <div class="pull-left poster">
+        <?= Html::a(Html::img('/' . Site::DIR_IMAGE . '/' . $site->thumbnailImage, [
+            'class' => 'img-responsive'
+        ]), '/' . Site::DIR_IMAGE . '/' . $site->image, [
+            'rel' => 'findImages'
+        ]); ?>
+    </div>
+    <?php if (Yii::$app->user->can('manager')): ?>
+        <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?php endif; ?>
+    <h1><?= Html::encode($site->name) ?></h1>
+    <?= $site->description ?>
 <?php endif; ?>
 
-<?php if (!empty($site->description)): ?>
-    <h3><?= Yii::t('site', 'Publications') ?></h3>
-    <?= $site->description ?>
+<?php if (!empty($site->finds)): ?>
+    <h2><?= Yii::t('app', 'Collection') ?></h2>
+    <div class="row collection">
+        <?php foreach ($site->finds as $find): ?>
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
+                    <?php if (!empty($find->image)): ?>
+                        <div class="row">
+                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, ['class' => 'img-responsive']) ?>
+                        </div>
+                    <?php endif; ?>
+                    <h4>
+                        <?= $find->name ?>
+                    </h4>
+                    <?= $find->annotation ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($site->publication)): ?>
+    <h3><?= Yii::t('app', 'Publications') ?></h3>
+    <?= $site->publication ?>
 <?php endif; ?>

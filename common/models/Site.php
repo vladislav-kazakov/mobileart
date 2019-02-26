@@ -25,6 +25,8 @@ use Imagine\Image\Box;
  * @property float $y
  * @property integer $created_at
  * @property integer $updated_at
+ * @property object $region
+ * @property string $thumbnailImage,
  */
 class Site extends ActiveRecord
 {
@@ -32,6 +34,7 @@ class Site extends ActiveRecord
     const DIR_IMAGE = 'uploads/site';
     const THUMBNAIL_W = 800;
     const THUMBNAIL_H = 500;
+    const THUMBNAIL_PREFIX = 'thumbnail_';
     const SCENARIO_CREATE = 'create';
     const COUNT_SYB = 500;
 
@@ -69,10 +72,11 @@ class Site extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_en'], 'required'],
+            [['name', 'name_en', 'region_id'], 'required'],
             [['name', 'annotation', 'description', 'publication'], 'string'],
             [['x', 'y'], 'double', 'min' => 0, 'max' => 1],
             ['image', 'string'],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
@@ -108,6 +112,10 @@ class Site extends ActiveRecord
 
             if (!empty($this->image) and file_exists($path . '/' . $this->image)) {
                 unlink($path . '/' . $this->image);
+
+                if (file_exists($path . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
+                    unlink($path . '/' . self::THUMBNAIL_PREFIX . $this->image);
+                }
             }
 
             FileHelper::createDirectory($path);
@@ -116,9 +124,12 @@ class Site extends ActiveRecord
             $this->fileImage->saveAs($path . '/' . $newName . '.' . $this->fileImage->extension);
             $this->image = $newName . '.' . $this->fileImage->extension;
 
-//            Image::thumbnail($path . '/' . $newName . '.' . $this->fileImage->extension, self::THUMBNAIL_W, self::THUMBNAIL_H)
-//                ->resize(new Box(self::THUMBNAIL_W, self::THUMBNAIL_H))
-//                ->save($path . '/' . $newName . '.' . $this->fileImage->extension, ['quality' => 80]);
+            $sizes = getimagesize($path . '/' . $newName . '.' . $this->fileImage->extension);
+            if ($sizes[0] > self::THUMBNAIL_W) {
+                Image::thumbnail($path . '/' . $newName . '.' . $this->fileImage->extension, self::THUMBNAIL_W, self::THUMBNAIL_H)
+                    ->resize(new Box(self::THUMBNAIL_W, self::THUMBNAIL_H))
+                    ->save($path . '/' . self::THUMBNAIL_PREFIX . $newName . '.' . $this->fileImage->extension, ['quality' => 80]);
+            }
 
             $this->scenario = self::SCENARIO_CREATE;
             return $this->save();
@@ -145,7 +156,38 @@ class Site extends ActiveRecord
             'publication_en' => 'Публикации на английском',
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
+            'region_id' => 'Регион',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(Region::className(), ['id' => 'region_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFinds()
+    {
+        return $this->hasMany(Find::className(), ['site_id' => 'id']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbnailImage()
+    {
+        $path = self::DIR_IMAGE;
+
+        if (file_exists($path . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
+            return self::THUMBNAIL_PREFIX . $this->image;
+        } else {
+            return $this->image;
+        }
     }
 
     /**

@@ -46,7 +46,10 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
 <h1><?= Html::encode($this->title) ?></h1>
 
-<?= $this->render('_site_form', ['model' => $model]) ?>
+<?= $this->render('_site_form', [
+    'model' => $model,
+    'data' => $data,
+]) ?>
 
 
 <div class="form-group">

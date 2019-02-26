@@ -14,8 +14,18 @@ class m190214_043111_create_find_table extends Migration
     {
         $this->createTable('find', [
             'id' => $this->primaryKey(),
+            'site_id' => $this->integer()->notNull(),
             'image' => $this->string(),
         ]);
+
+        $this->addForeignKey(
+            'fk-find-site',
+            'find',
+            'site_id',
+            'site',
+            'id',
+            'CASCADE'
+        );
 
         $this->createTable('find_language', [
             'id' => $this->primaryKey(),
@@ -27,14 +37,14 @@ class m190214_043111_create_find_table extends Migration
             'publication' => $this->text()->comment('Публикация'),
             'technique' => $this->text()->comment('Техника изготовления'),
             'traces_disposal' => $this->text()->comment('Следы утилизации'),
-            'storage_location' => $this->text()->comment('Место хранения'),
-            'inventory number' => $this->text()->comment('Инвентарный номер'),
-            'museum_kamis' => $this->text()->comment('Музейная КАМИС'),
+            'storage_location' => $this->string()->comment('Место хранения'),
+            'inventory_number' => $this->string()->comment('Инвентарный номер'),
+            'museum_kamis' => $this->string()->comment('Музейная КАМИС'),
             'size' => $this->text()->comment('Размеры'),
-            'material' => $this->text()->comment('Материалы'),
-            'age' => $this->text()->comment('Возраст'),
-            'culture' => $this->text()->comment('Культура'),
-            'author_excavation' => $this->text()->comment('Автор раскопок'),
+            'material' => $this->string()->comment('Материалы'),
+            'dating' => $this->string()->comment('Датировка'),
+            'culture' => $this->string()->comment('Культура'),
+            'author_excavation' => $this->string()->comment('Автор раскопок'),
             'year' => $this->integer(4)->comment('Год'),
             'link' => $this->text()->comment('Ссылки'),
         ]);
@@ -79,6 +89,10 @@ class m190214_043111_create_find_table extends Migration
         $this->dropForeignKey(
             'fk-find_language-find',
             'find_language'
+        );
+        $this->dropForeignKey(
+            'fk-find-site',
+            'find'
         );
 
         $this->dropTable('find_language');
