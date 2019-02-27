@@ -16,14 +16,19 @@ $this->params['breadcrumbs'] = [
 
 $script = <<< JS
 
-$(document).ready(function() {
-    $('.sites').masonry();
-})
+$(document).ready(function () {
+    var container = $('.sites');
+
+    container.imagesLoaded(function () {
+        container.masonry();
+    });
+});
 
 JS;
 
 $this->registerCssFile('css/site.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJsFile('/js/imagesloaded.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJs($script, yii\web\View::POS_READY);
 ?>
 

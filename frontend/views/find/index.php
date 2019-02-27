@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use common\models\Find;
 use yii\helpers\Url;
 
-$this->title = Yii::t('app', 'Finds');
+$this->title = Yii::t('app', 'Collection');
 
 $this->params['breadcrumbs'] = [
     $this->title,
@@ -16,14 +16,19 @@ $this->params['breadcrumbs'] = [
 
 $script = <<< JS
 
-$(document).ready(function() {
-    $('.finds').masonry();
-})
+$(document).ready(function () {
+    var container = $('.finds');
+
+    container.imagesLoaded(function () {
+        container.masonry();
+    });
+});
 
 JS;
 
 $this->registerCssFile('css/find.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJsFile('/js/imagesloaded.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJs($script, yii\web\View::POS_READY);
 ?>
 
