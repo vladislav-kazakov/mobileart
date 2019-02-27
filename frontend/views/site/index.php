@@ -40,7 +40,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
             <div class="col-xs-12 col-sm-6">
                 <a href="<?= Url::to(['site/view', 'id' => $site->id]) ?>" class="site-item">
                         <div class="row">
-                            <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->thumbnailImage, ['class' => 'img-responsive']) ?>
+                            <?= Html::img(Site::SRC_IMAGE . '/' . $site->thumbnailImage, ['class' => 'img-responsive']) ?>
                         </div>
                         <h3>
                             <?= $site->name ?>

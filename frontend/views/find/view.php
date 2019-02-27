@@ -270,9 +270,9 @@ if (!empty($find->publication)) {
 <?php else: ?>
     <div class="pull-left poster">
         <?php if (empty($find->three_d)): ?>
-            <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
+            <?= Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
                 'class' => 'img-responsive'
-            ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
+            ]), Find::SRC_IMAGE . '/' . $find->image, [
                 'rel' => 'findImages'
             ]); ?>
         <?php else: ?>
@@ -308,9 +308,9 @@ if (!empty($find->publication)) {
         <?php if (!empty($find->three_d)): ?>
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="image">
-                    <?= Html::a(Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, [
+                    <?= Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
                         'class' => 'img-responsive'
-                    ]), '/' . Find::DIR_IMAGE . '/' . $find->image, [
+                    ]), Find::SRC_IMAGE . '/' . $find->image, [
                         'rel' => 'findImages'
                     ]); ?>
                 </div>
@@ -320,9 +320,9 @@ if (!empty($find->publication)) {
             <?php foreach ($find->images as $item): ?>
                 <div class="col-xs-6 col-sm-4 col-md-3">
                     <div class="image">
-                        <?= Html::a(Html::img('/' . FindImage::DIR_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
+                        <?= Html::a(Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
                             'class' => 'img-responsive img-thumbnail'
-                        ]), '/' . FindImage::DIR_IMAGE . '/' . $item->image, [
+                        ]), FindImage::SRC_IMAGE . '/' . $item->image, [
                             'rel' => 'findImages'
                         ]); ?>
                     </div>
