@@ -20,7 +20,8 @@ use Imagine\Image\Box;
 class FindImage extends ActiveRecord
 {
 
-    const DIR_IMAGE = 'uploads/find_image';
+    const DIR_IMAGE = 'storage/web/find_image';
+    const SRC_IMAGE = '/storage/find_image';
     const THUMBNAIL_W = 800;
     const THUMBNAIL_H = 500;
     const SCENARIO_CREATE = 'create';

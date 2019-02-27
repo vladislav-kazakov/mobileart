@@ -49,7 +49,7 @@ $this->params['breadcrumbs'] = [
                             'method' => 'post',
                         ]
                     ]) ?>
-                    <?= Html::img('/' . FindImage::DIR_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['class' => 'img-responsive img-thumbnail']) ?>
+                    <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['class' => 'img-responsive img-thumbnail']) ?>
                     <br>
                 </div>
             </div>

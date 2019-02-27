@@ -31,7 +31,8 @@ use Imagine\Image\Box;
 class Site extends ActiveRecord
 {
 
-    const DIR_IMAGE = 'uploads/site';
+    const DIR_IMAGE = 'storage/web/site';
+    const SRC_IMAGE = '/storage/site';
     const THUMBNAIL_W = 800;
     const THUMBNAIL_H = 500;
     const THUMBNAIL_PREFIX = 'thumbnail_';
