@@ -20,13 +20,18 @@ $this->params['breadcrumbs'] = [
 
 $script = <<< JS
 
-$(document).ready(function() {
-    $('.collection').masonry();
-})
+$(document).ready(function () {
+    var container = $('.collection');
+
+    container.imagesLoaded(function () {
+        container.masonry();
+    });
+});
 
 JS;
 
 $this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJsFile('/js/imagesloaded.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 $this->registerJs($script, yii\web\View::POS_READY);
 $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 ?>

@@ -212,7 +212,7 @@ if (!empty($find->link)) {
 
 if (!empty($find->publication)) {
     $tabs[] = [
-        'label' => '<i class="fas fa-book"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Publications') . '</span>',
+        'label' => '<i class="fas fa-book hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Publications') . '</span>',
         'headerOptions' => [
             'class' => 'tab-header',
             'data-toggle' => 'tooltip',
