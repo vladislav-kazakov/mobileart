@@ -58,12 +58,28 @@ class FindImage extends ActiveRecord
      */
     public function beforeDelete()
     {
-        $baseDir = self::DIR_IMAGE;
+        $baseDir = self::basePath();
 
         if (!empty($this->image) and file_exists($baseDir . '/' . $this->image)) {
             unlink($baseDir . '/' . $this->image);
         }
 
         return parent::beforeDelete();
+    }
+
+    /**
+     * Устанавливает путь до директории
+     *
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public static function basePath()
+    {
+        $path = \Yii::getAlias('@' . self::DIR_IMAGE);
+
+        // Создаем директорию, если не существует
+        FileHelper::createDirectory($path);
+
+        return $path;
     }
 }

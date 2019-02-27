@@ -182,7 +182,7 @@ class Find extends ActiveRecord
     {
         if ($this->validate() and !empty($this->fileImage)) {
 
-            $path = self::DIR_IMAGE;
+            $path = self::basePath();
 
             if (!empty($this->image) and file_exists($path . '/' . $this->image)) {
                 unlink($path . '/' . $this->image);
@@ -220,7 +220,7 @@ class Find extends ActiveRecord
     {
         if ($this->validate() and $this->id) {
 
-            $path = FindImage::DIR_IMAGE;
+            $path = FindImage::basePath();
             $is_error = false;
 
             foreach ($this->fileImages as $file) {
@@ -313,10 +313,11 @@ class Find extends ActiveRecord
 
     /**
      * @return string
+     * @throws \yii\base\Exception
      */
     public function getThumbnailImage()
     {
-        $path = self::DIR_IMAGE;
+        $path = self::basePath();
 
         if (file_exists($path . '/' . self::THUMBNAIL_PREFIX . $this->image)) {
             return self::THUMBNAIL_PREFIX . $this->image;
@@ -333,7 +334,7 @@ class Find extends ActiveRecord
      */
     public function beforeDelete()
     {
-        $baseDir = self::DIR_IMAGE;
+        $baseDir = self::basePath();
 
         if (!empty($this->image) and file_exists($baseDir . '/' . $this->image)) {
             unlink($baseDir . '/' . $this->image);
@@ -344,5 +345,21 @@ class Find extends ActiveRecord
         }
 
         return parent::beforeDelete();
+    }
+
+    /**
+     * Устанавливает путь до директории
+     *
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public static function basePath()
+    {
+        $path = \Yii::getAlias('@' . self::DIR_IMAGE);
+
+        // Создаем директорию, если не существует
+        FileHelper::createDirectory($path);
+
+        return $path;
     }
 }
