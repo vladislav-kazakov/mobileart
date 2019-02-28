@@ -36,7 +36,7 @@ $this->registerCssFile('css/region.css', ['depends' => ['yii\bootstrap\Bootstrap
                 <a href="<?= Url::to(['site/view', 'id' => $site->id]) ?>" class="site-item">
                     <?php if (!empty($site->image)): ?>
                         <div class="row">
-                            <?= Html::img('/' . Site::DIR_IMAGE . '/' . $site->thumbnailImage, ['class' => 'img-responsive']) ?>
+                            <?= Html::img(Site::SRC_IMAGE . '/' . $site->thumbnailImage, ['class' => 'img-responsive']) ?>
                         </div>
                     <?php endif; ?>
                     <h3>

@@ -40,7 +40,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
             <div class="col-xs-6 col-sm-4 col-sm-3">
                 <a href="<?= Url::to(['find/view', 'id' => $find->id]) ?>" class="find-item">
                         <div class="row">
-                            <?= Html::img('/' . Find::DIR_IMAGE . '/' . $find->thumbnailImage, ['class' => 'img-responsive']) ?>
+                            <?= Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, ['class' => 'img-responsive']) ?>
                         </div>
                         <h3>
                             <?= $find->name ?>
