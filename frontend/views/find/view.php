@@ -52,7 +52,7 @@ if (!empty($find->technique)) {
 
 if (!empty($find->traces_disposal)) {
     $tabs[] = [
-        'label' => '<i class="fas fa-trash-alt  hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Traces of disposal') . '</span>',
+        'label' => '<i class="fas fa-bone hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Traces of disposal') . '</span>',
         'headerOptions' => [
             'class' => 'tab-header',
             'data-toggle' => 'tooltip',
