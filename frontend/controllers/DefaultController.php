@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\BannerImage;
 use common\models\Region;
 use common\models\Site;
 use Yii;
@@ -76,9 +77,11 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $regions = Region::find()->all();
+        $bannerImages = BannerImage::find()->orderBy(['position' => SORT_ASC])->all();
 
         return $this->render('index', [
             'regions' => $regions,
+            'bannerImages' => $bannerImages,
         ]);
     }
 

@@ -8,7 +8,7 @@ $this->registerCssFile('css/home.css?201902172259', ['depends' => ['yii\bootstra
 $this->title = Yii::$app->name;
 ?>
 
-<?= $this->render('_banner') ?>
+<?= $this->render('_banner', ['bannerImages' => $bannerImages]) ?>
 
 <div class="row">
     <div class="col-xs-12">
