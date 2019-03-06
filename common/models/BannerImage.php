@@ -20,7 +20,7 @@ class BannerImage extends \yii\db\ActiveRecord
     const DIR_IMAGE = 'storage/web/banner_image';
     const SRC_IMAGE = '/storage/banner_image';
     const THUMBNAIL_W = 800;
-    const THUMBNAIL_H = 500;
+    const THUMBNAIL_H = 350;
     const THUMBNAIL_PREFIX = 'thumbnail_';
     const COUNT_SYB = 500;
 

@@ -1,18 +1,33 @@
 .banner {
+  position: relative;
   margin-top: -20px;
-  min-height: 400px;
   padding: 30px 0;
   margin-bottom: 40px;
-  background: linear-gradient(45deg, #EECFBA, #C5DDE8);
+  background: url("../img/bg.jpg") no-repeat center center;
+  background-size: cover;
   color: #fff; }
+  .banner:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+    background: linear-gradient(0deg, rgba(238, 207, 186, 0.5), rgba(197, 221, 232, 0.8));
+    border-radius: 8px; }
+  .banner .flex {
+    display: flex; }
   .banner .plate {
-    max-width: 600px;
-    padding-right: 40px;
-    color: #434343; }
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    height: 100%; }
     .banner .plate h1 {
-      font-size: 44px; }
+      font-size: 32px; }
     .banner .plate p {
-      font-size: 28px; }
+      font-size: 20px; }
   .banner .owl-dots {
     margin-top: 15px;
     text-align: center; }
@@ -43,5 +58,18 @@
   width: 30px;
   height: 30px;
   background: url(/img/marker-region.png); }
+
+@media (max-width: 768px) {
+  .poster {
+    margin-right: 0;
+    max-width: 100%; }
+
+  .banner .flex {
+    display: block; }
+  .banner .plate {
+    margin-bottom: 30px; } }
+@media (min-width: 769px) and (max-width: 991px) {
+  .banner .flex {
+    display: block; } }
 
 /*# sourceMappingURL=home.css.map */
