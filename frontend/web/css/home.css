@@ -4,7 +4,8 @@
   padding: 30px 0;
   margin-bottom: 40px;
   background: url("../img/bg.jpg") no-repeat center center;
-  background-size: cover; }
+  background-size: cover;
+  color: #fff; }
   .banner:before {
     content: '';
     display: block;
@@ -14,14 +15,16 @@
     right: 0;
     bottom: 0;
     opacity: 1;
-    background: rgba(207, 191, 238, 0.8);
+    background-color: rgba(109, 109, 109, 0.3);
     border-radius: 8px; }
   .banner .flex {
     display: flex; }
   .banner .plate {
     display: block;
     height: 100%;
-    position: relative; }
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px; }
     .banner .plate h1 {
       font-size: 40px;
       font-weight: bold; }
