@@ -100,7 +100,7 @@ AppAsset::register($this);
             ↦
             <a href="http://artemir.nsu.ru/" target="_blank"><?= Yii::t('app', 'Lab "LIA ARTEMIR"') ?></a>
         </p>
-        <p><?= Yii::t('app', 'Project supported by RSCF #18-78-10079') ?> </p>
+        <p><?= Yii::t('app', 'Project supported by RNF #18-78-10079') ?> </p>
     </div>
 </footer>
 

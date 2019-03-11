@@ -3,12 +3,12 @@
 /* @var $this yii\web\View */
 
 
-$this->registerCssFile('css/home.css?201902172259', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerCssFile('css/home.css?201903111605', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
 
 $this->title = Yii::$app->name;
 ?>
 
-<?= $this->render('_banner') ?>
+<?= $this->render('_banner', ['bannerImages' => $bannerImages]) ?>
 
 <div class="row">
     <div class="col-xs-12">
