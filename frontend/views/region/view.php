@@ -17,7 +17,55 @@ $this->params['breadcrumbs'] = [
 ];
 
 $this->registerCssFile('css/region.css', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$script = <<< JS
+
+$(document).ready(function () {
+    var container = $('.collection');
+
+    container.imagesLoaded(function () {
+        container.masonry();
+    });
+});
+
+JS;
+
+$this->registerJsFile('/js/masonry.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJsFile('/js/imagesloaded.pkgd.min.js', ['depends' => ['yii\bootstrap\BootstrapPluginAsset']]);
+$this->registerJs($script, yii\web\View::POS_READY);
 ?>
+
+<?= newerton\fancybox\FancyBox::widget([
+    'target' => 'a[rel=findImages]',
+    'helpers' => true,
+    'mouse' => true,
+    'config' => [
+        'maxWidth' => '90%',
+        'maxHeight' => '90%',
+        'playSpeed' => 7000,
+        'padding' => 0,
+        'fitToView' => false,
+        'width' => '70%',
+        'height' => '70%',
+        'autoSize' => false,
+        'closeClick' => false,
+        'openEffect' => 'elastic',
+        'closeEffect' => 'elastic',
+        'prevEffect' => 'elastic',
+        'nextEffect' => 'elastic',
+        'closeBtn' => false,
+        'openOpacity' => true,
+        'helpers' => [
+            'title' => ['type' => 'float'],
+            'buttons' => [],
+            'thumbs' => ['width' => 68, 'height' => 50],
+            'overlay' => [
+                'css' => [
+                    'background' => 'rgba(0, 0, 0, 0.8)'
+                ]
+            ]
+        ],
+    ]
+]) ?>
 
 
 <h1><?= Html::encode($region->name) ?></h1>
@@ -30,9 +78,9 @@ $this->registerCssFile('css/region.css', ['depends' => ['yii\bootstrap\Bootstrap
 
 <?php if (!empty($region->sites)): ?>
     <h2><?= Yii::t('app', 'Sites') ?></h2>
-    <div class="row">
+    <div class="row collection">
         <?php foreach ($region->sites as $site): ?>
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12 col-sm-4 col-md-3">
                 <a href="<?= Url::to(['site/view', 'id' => $site->id]) ?>" class="site-item">
                     <?php if (!empty($site->image)): ?>
                         <div class="row">

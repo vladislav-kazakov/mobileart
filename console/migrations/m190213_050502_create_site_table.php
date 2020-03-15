@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `site`.
  */
-class m190213_050502_create_site_table extends Migration
+class m190211_050502_create_site_table extends Migration
 {
     /**
      * {@inheritdoc}
