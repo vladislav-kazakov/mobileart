@@ -21,7 +21,7 @@ $this->params['breadcrumbs'] = [
 $script = <<< JS
 
 $(document).ready(function () {
-    var container = $('.collection');
+    var container = $(' collection');
 
     container.imagesLoaded(function () {
         container.masonry();
@@ -78,6 +78,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
     <h1><?= Html::encode($site->name) ?></h1>
     <?= $site->description ?>
 <?php else: ?>
+<div class="row">
     <div class="pull-left poster">
         <?= Html::a(Html::img(Site::SRC_IMAGE . '/' . $site->thumbnailImage, [
             'class' => 'img-responsive'
@@ -91,6 +92,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
     <?php endif; ?>
     <h1><?= Html::encode($site->name) ?></h1>
     <?= $site->description ?>
+</div>
 <?php endif; ?>
 
 <?php if (!empty($site->finds)): ?>
