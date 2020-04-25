@@ -94,6 +94,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
 <?php endif; ?>
 
 <?php if (!empty($site->finds)): ?>
+    <div class="clearfix"></div>
     <h2><?= Yii::t('app', 'Collection') ?></h2>
     <div class="row collection">
         <?php foreach ($site->finds as $find): ?>
